@@ -1,15 +1,22 @@
 package com.meetime.challenge.service;
 
+import com.meetime.challenge.DTOs.TokenResponseDTO;
 import com.meetime.challenge.config.HubspotProperties;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
 public class OAuthService {
 
     private final HubspotProperties properties;
+    private final WebClient webClient = WebClient.create();
 
     public String getAuthorizationUrl() {
         return UriComponentsBuilder.fromUriString(properties.getAuthorizeUrl())
@@ -19,5 +26,21 @@ public class OAuthService {
                 .queryParam("response_type", "code")
                 .build(true)
                 .toUriString();
+    }
+
+    public Mono<TokenResponseDTO> codeToToken(String code) {
+        MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
+        form.add("grant_type", "authorization_code");
+        form.add("client_id", properties.getClientId());
+        form.add("client_secret", properties.getClientSecret());
+        form.add("redirect_uri", properties.getRedirectUri());
+        form.add("code", code);
+
+        return webClient.post()
+                .uri(properties.getTokenUrl())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .bodyValue(form)
+                .retrieve()
+                .bodyToMono(TokenResponseDTO.class);
     }
 }
