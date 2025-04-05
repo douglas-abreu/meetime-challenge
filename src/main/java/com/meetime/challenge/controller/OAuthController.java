@@ -28,8 +28,10 @@ public class OAuthController {
     }
 
     @PostMapping("/contacts")
-    public ResponseEntity<?> createContact(@RequestBody ContactDTO contact) {
-        return null;
+    public ResponseEntity<Mono<String>> createContact(
+            @RequestBody ContactDTO request, @RequestHeader("Authorization") String token) {
+        Mono<String> result = service.createContact(request, token.replace("Bearer ", ""));
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/webhook")

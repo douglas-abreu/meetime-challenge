@@ -1,8 +1,10 @@
 package com.meetime.challenge.service;
 
+import com.meetime.challenge.DTOs.ContactDTO;
 import com.meetime.challenge.DTOs.TokenResponseDTO;
 import com.meetime.challenge.config.HubspotProperties;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -10,6 +12,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +46,25 @@ public class OAuthService {
                 .bodyValue(form)
                 .retrieve()
                 .bodyToMono(TokenResponseDTO.class);
+    }
+
+    public Mono<String> createContact(ContactDTO contact, String accessToken) {
+        String url = properties.getApiBaseUrl() + "/crm/v3/objects/contacts";
+
+        Map<String, Object> body = Map.of(
+                "properties", Map.of(
+                        "email", contact.getEmail(),
+                        "firstname", contact.getFirstname(),
+                        "lastname", contact.getLastname()
+                )
+        );
+
+        return webClient.post()
+                .uri(url)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(body)
+                .retrieve()
+                .bodyToMono(String.class);
     }
 }
