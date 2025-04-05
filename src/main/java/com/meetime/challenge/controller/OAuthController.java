@@ -2,6 +2,7 @@ package com.meetime.challenge.controller;
 
 import com.meetime.challenge.DTOs.ContactDTO;
 import com.meetime.challenge.DTOs.WebhookPayloadDTO;
+import com.meetime.challenge.service.OAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class OAuthController {
 
+    private final OAuthService service;
+
     @GetMapping("/authorize-url")
-    public ResponseEntity<?> getAuthorizeUrl() {
-        return null;
+    public ResponseEntity<String> getAuthorizationUrl() {
+        return ResponseEntity.ok(service.getAuthorizationUrl());
     }
 
     @GetMapping("/callback")
