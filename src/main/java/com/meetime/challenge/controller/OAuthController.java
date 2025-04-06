@@ -35,8 +35,9 @@ public class OAuthController {
     }
 
     @PostMapping("/webhook")
-    public ResponseEntity<?> receiveWebhook(@RequestBody WebhookPayloadDTO payload) {
-        return null;
+    public ResponseEntity<Void> webhook(@RequestBody String payload) {
+        System.out.println("Webhook recebido: " + payload);
+        return ResponseEntity.ok().build();
     }
 
 }
