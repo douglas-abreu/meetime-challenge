@@ -2,8 +2,8 @@ package com.meetime.challenge.controller;
 
 import com.meetime.challenge.DTOs.ContactDTO;
 import com.meetime.challenge.DTOs.TokenResponseDTO;
-import com.meetime.challenge.DTOs.WebhookPayloadDTO;
 import com.meetime.challenge.service.OAuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ public class OAuthController {
 
     @PostMapping("/contacts")
     public ResponseEntity<Mono<String>> createContact(
-            @RequestBody ContactDTO request, @RequestHeader("Authorization") String token) {
+            @RequestBody @Valid ContactDTO request, @RequestHeader("Authorization") String token) {
         Mono<String> result = service.createContact(request, token.replace("Bearer ", ""));
         return ResponseEntity.ok(result);
     }
