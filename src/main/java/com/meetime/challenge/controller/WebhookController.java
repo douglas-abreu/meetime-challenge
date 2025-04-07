@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/webhooks")
-public class Webhook {
+public class WebhookController {
 
     @PostMapping
     public ResponseEntity<Void> webhook(@RequestBody String payload) {
