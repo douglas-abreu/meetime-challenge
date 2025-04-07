@@ -1,10 +1,8 @@
 package com.meetime.challenge.service;
 
-import com.meetime.challenge.DTOs.ContactDTO;
 import com.meetime.challenge.DTOs.TokenResponseDTO;
 import com.meetime.challenge.config.HubspotProperties;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -12,8 +10,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
-
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
