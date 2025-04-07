@@ -48,23 +48,5 @@ public class OAuthService {
                 .bodyToMono(TokenResponseDTO.class);
     }
 
-    public Mono<String> createContact(ContactDTO contact, String accessToken) {
-        String url = properties.getApiBaseUrl() + "/crm/v3/objects/contacts";
 
-        Map<String, Object> body = Map.of(
-                "properties", Map.of(
-                        "email", contact.getEmail(),
-                        "firstname", contact.getFirstname(),
-                        "lastname", contact.getLastname()
-                )
-        );
-
-        return webClient.post()
-                .uri(url)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(body)
-                .retrieve()
-                .bodyToMono(String.class);
-    }
 }
