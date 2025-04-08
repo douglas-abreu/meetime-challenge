@@ -47,18 +47,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(WebExchangeBindException.class)
-    public ResponseEntity<ErrorResponse> handle(WebExchangeBindException exception) {
-        List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-        List<String> errors = new ArrayList<>();
-        for (FieldError fieldError : fieldErrors) {
-            String messageError = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
-            errors.add(messageError);
-        }
+    public ResponseEntity<ErrorResponse> handleValidation(WebExchangeBindException exception) {
+        String combinedErrors = exception.getFieldErrors().stream()
+                .map(fieldError -> messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
+                .collect(Collectors.joining("; "));
 
         ErrorResponse error = ErrorResponse.from(
                 HttpStatus.BAD_REQUEST,
                 "Erro no formulário",
-                errors.toString()
+                combinedErrors
         );
 
         return ResponseEntity.badRequest().body(error);
