@@ -1,6 +1,6 @@
 package com.meetime.challenge.service;
 
-import com.meetime.challenge.DTOs.ContactDTO;
+import com.meetime.challenge.dto.ContactDTO;
 import com.meetime.challenge.config.HubspotProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
