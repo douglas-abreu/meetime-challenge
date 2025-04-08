@@ -104,6 +104,6 @@ curl https://meetime-challenge.onrender.com
 Example:
 
 ```bash
-curl https://meetime-challenge.onrender.com/authorize-url
+curl https://meetime-challenge.onrender.com/oauth/authorize-url
 ```
 ---
