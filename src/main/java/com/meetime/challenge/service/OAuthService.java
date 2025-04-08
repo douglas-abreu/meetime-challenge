@@ -1,6 +1,6 @@
 package com.meetime.challenge.service;
 
-import com.meetime.challenge.DTOs.TokenResponseDTO;
+import com.meetime.challenge.dto.TokenResponseDTO;
 import com.meetime.challenge.config.HubspotProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
