@@ -1,4 +1,4 @@
-package com.meetime.challenge.DTOs;
+package com.meetime.challenge.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
